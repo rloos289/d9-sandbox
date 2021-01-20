@@ -15,15 +15,14 @@ Features:
 
 **This is a one time setup - skip this if you already have a working Docksal environment.**
 
-Follow [Docksal environment setup instructions](https://docs.docksal.io/getting-started/setup/)
-
+Follow [Docksal environment setup instructions (MacOS with Docker Desktop)](https://docs.docksal.io/getting-started/setup/#install-macos-docker-for-mac)
 ### Step #2: Project setup
 
 1. Clone this repo into your Projects directory
 
     ```
-    git clone https://github.com/docksal/boilerplate-drupal9-composer.git drupal9
-    cd drupal9
+    git clone git@github.com:rloos289/d9-sandbox.git
+    cd d9-sandbox
     ```
 
 2. Initialize the site
@@ -37,7 +36,7 @@ Follow [Docksal environment setup instructions](https://docs.docksal.io/getting-
 3. Point your browser to
 
     ```
-    http://drupal9.docksal
+    http://d9-sandbox.docksal
     ```
 
 When the automated install is complete the command line output will display the admin username and password.
