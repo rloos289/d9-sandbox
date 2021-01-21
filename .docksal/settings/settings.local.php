@@ -66,7 +66,7 @@ $config['system.performance']['js']['preprocess'] = FALSE;
  *
  * Only use this setting once the site has been installed.
  */
-# $settings['cache']['bins']['render'] = 'cache.backend.null';
+$settings['cache']['bins']['render'] = 'cache.backend.null';
 
 /**
  * Disable caching for migrations.
@@ -88,7 +88,7 @@ $config['system.performance']['js']['preprocess'] = FALSE;
  *
  * Only use this setting once the site has been installed.
  */
-# $settings['cache']['bins']['page'] = 'cache.backend.null';
+$settings['cache']['bins']['page'] = 'cache.backend.null';
 
 /**
  * Disable Dynamic Page Cache.
@@ -97,7 +97,7 @@ $config['system.performance']['js']['preprocess'] = FALSE;
  * cacheability metadata is present (and hence the expected behavior). However,
  * in the early stages of development, you may want to disable it.
  */
-# $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+$settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
 
 /**
  * Allow test modules and themes to be installed.
@@ -140,6 +140,9 @@ $databases['default']['default'] = [
 	'host' => 'db',
 	'driver' => 'mysql',
 ];
+
+// Send config files to config directory.
+$settings['config_sync_directory'] = getenv('DOCROOT') ? '../config' : 'sites/default/config';
 
 // Workaround for permission issues with NFS shares
 $settings['file_chmod_directory'] = 0777;
