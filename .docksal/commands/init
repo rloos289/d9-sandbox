@@ -7,9 +7,7 @@
 # Abort if anything fails
 set -e
 
-#-------------------------- Helper functions --------------------------------
-
-# Console colors
+# Set the colors that the console will use for output.
 red='\033[0;31m'
 green='\033[0;32m'
 green_bg='\033[1;97;42m'
@@ -25,12 +23,15 @@ echo-yellow () { echo -e "${yellow}$1${NC}"; }
 
 # Stack initialization
 echo -e "${green_bg} Step 1 ${NC}${green} Initializing stack...${NC}"
+# Run reset to destroy all existing volumes/containers to prevent naming
+# collisions and other issues.
 fin project reset -f
 
 # Site initialization
 echo -e "${green_bg} Step 2 ${NC}${green} Initializing site...${NC}"
-# This runs inside cli using http://docs.docksal.io/en/v1.4.0/fin/custom-commands/#executing-commands-inside-cli
-fin init-site
+# This runs inside cli using https://docs.docksal.io/fin/custom-commands/#target_cli
+# (Notice 'exec_target = cli' at the top of the file that this is calling)
+fin init-site #calling .docksal/commands/init-site
 
 echo -e "${green_bg} DONE! ${NC}${green} Completed all initialization steps.${NC}"
 

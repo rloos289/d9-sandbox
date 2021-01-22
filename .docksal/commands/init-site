@@ -9,18 +9,7 @@
 # Abort if anything fails
 set -e
 
-#-------------------------- Settings --------------------------------
-
-# PROJECT_ROOT and DOCROOT are set as env variables in cli
-SITE_DIRECTORY="default"
-DOCROOT_PATH="${PROJECT_ROOT}/${DOCROOT}"
-SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
-
-#-------------------------- END: Settings --------------------------------
-
-#-------------------------- Helper functions --------------------------------
-
-# Console colors
+# Set the colors that the console will use for output.
 red='\033[0;31m'
 green='\033[0;32m'
 green_bg='\033[1;97;42m'
@@ -31,6 +20,30 @@ echo-red () { echo -e "${red}$1${NC}"; }
 echo-green () { echo -e "${green}$1${NC}"; }
 echo-green-bg () { echo -e "${green_bg}$1${NC}"; }
 echo-yellow () { echo -e "${yellow}$1${NC}"; }
+
+#-------------------------- Settings --------------------------------
+
+# PROJECT_ROOT and DOCROOT are set as env variables in cli using .docksal/docksal.env
+SITE_DIRECTORY="default"
+DOCROOT_PATH="${PROJECT_ROOT}/${DOCROOT}"
+SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
+
+#-------------------------- END: Settings --------------------------------
+
+#-------------------------- Helper functions --------------------------------
+
+# Run composer install from the project root to install dependencies.
+composer_install ()
+{
+	cd "$PROJECT_ROOT"
+	composer install
+}
+
+# Fix file/folder permissions
+fix_permissions ()
+{
+	chmod 755 "${SITEDIR_PATH}"
+}
 
 # Copy a settings file.
 # Skips if the destination file already exists.
@@ -49,60 +62,42 @@ copy_settings_file()
 	fi
 }
 
-#-------------------------- END: Helper functions --------------------------------
-
-#-------------------------- Functions --------------------------------
-
-composer_install ()
-{
-	cd "$PROJECT_ROOT"
-	echo-green "Installing dependencies..."
-	composer install
-}
-
-# Initialize local settings files
+# Initialize local settings files.
 init_settings ()
 {
 	# drupal-composer/drupal-project creates settings.php from default.settings.php.
 	# Since we supply our own settings.php below, we have to drop the default file first.
-	# TODO: Uncomment the local config (settings.local.php) include section in settings.php inline instead.
-	# That'a the only change we need in the stock settings.php
 	rm -f "${SITEDIR_PATH}/settings.php"
 
 	copy_settings_file "${PROJECT_ROOT}/.docksal/settings/settings.php" "${SITEDIR_PATH}/settings.php"
 	copy_settings_file "${PROJECT_ROOT}/.docksal/settings/settings.local.php" "${SITEDIR_PATH}/settings.local.php"
 }
 
-# Fix file/folder permissions
-fix_permissions ()
-{
-	echo-green "Making site directory writable..."
-	chmod 755 "${SITEDIR_PATH}"
-}
-
-# Install site
+# Install drupal from project root
 site_install ()
 {
 	cd "$DOCROOT_PATH"
-
-	echo-green "Installing Drupal..."
 	# While this is techincally using the minimal install profile, all of the config
 	# its using is from standard. This is because of a bug encountered with the
 	# shortcuts module (Which has been removed from the config)
 	drush site-install minimal --existing-config --account-pass="admin" --site-name='d9-sandbox' -y
 }
 
-#-------------------------- END: Functions --------------------------------
+#-------------------------- END: Helper Functions --------------------------------
 
 #-------------------------- Execution --------------------------------
 
-# Project initialization steps
+# Project initialization steps using all of the functions written above
+echo -e "${green_bg} Step 3 ${NC}${green} Running composer install...${NC}"
 time -p composer_install
+echo -e "${green_bg} Step 4 ${NC}${green} Making site directory writable... ${NC}"
 fix_permissions
+echo -e "${green_bg} Step 5 ${NC}${green} Organizing settings.php files... ${NC}"
 init_settings
+echo -e "${green_bg} Step 6 ${NC}${green} Installing Drupal... ${NC}"
 time -p site_install
 
 echo -e "Open ${yellow}http://${VIRTUAL_HOST}${NC} in your browser to verify the setup."
-echo-yellow "Look for admin login credentials in the output above."
+echo-yellow "Open ${yellow}http://${VIRTUAL_HOST}${NC}/user/login to log in with user:admin password:admin."
 
 #-------------------------- END: Execution --------------------------------
