@@ -3,12 +3,4 @@
 /**
  * @file
  * Primary module hooks for My Module module.
- *
  */
-
-/**
- * Implements hook_form_alter().
- */
-function mymodule_form_alter(&$form, $form_state, $form_id) {
-
-}

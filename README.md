@@ -41,6 +41,24 @@ Follow [Docksal environment setup instructions (MacOS with Docker Desktop)](http
 
 When the automated install is complete the command line output will display the admin username and password.
 
+After running `fin init` you will have a full D9 instance ready to go with the following things.
+- Basic configuration files from the standard profile installed and configured.
+- Settings.php and development.services.yml configured for local dev work.
+- Composer set up to allow for Drupal patches.
+- Composer set with different sections for dev and regular dependencies.
+- The admin toolbar module installed and configured as an example of a contrib module.
+- An empty custom module installed and configured as an example of custom modules.
+
+## Custom Commands
+
+fin sequelpro - Open this site's database in sequel pro (requires a local version of sequelpro `brew install --cask sequel-pro`)
+fin uli - Generate a one-time user login link for Drupal
+fin init - Starts site initialization and runs `fin site-init` (you should only have to run this once)
+fin site-init - Installs and configures the site (don't run this directly)
+fin phpcs - Validates all of the PHP in web/modules/custom to the Drupal standard
+fin phpcs-clean-up - Fixes everything marked by `fin phpcs` that can be fixed automatically
+fin remindme - Prints helpful docker terms and links to the terminal.
+fin test - Test the site installation.
 
 ## More automation with 'fin init'
 
@@ -54,8 +72,6 @@ Some common tasks that can be handled by the init script (an other [custom comma
 - compile Sass
 - run DB updates, revert features, clear caches, etc.
 - enable/disable modules, update variables values
-
-
 ## Security notice
 
 This repo is intended for quick start demos and includes a hardcoded value for `hash_salt` in `settings.php`.
