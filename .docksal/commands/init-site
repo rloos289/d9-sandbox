@@ -87,7 +87,7 @@ site_install ()
 
 #-------------------------- Execution --------------------------------
 
-# Project initialization steps using all of the functions written above
+# Project initialization steps using all of the functions written above.
 echo -e "${green_bg} Step 3 ${NC}${green} Running composer install...${NC}"
 time -p composer_install
 echo -e "${green_bg} Step 4 ${NC}${green} Making site directory writable... ${NC}"
@@ -97,7 +97,6 @@ init_settings
 echo -e "${green_bg} Step 6 ${NC}${green} Installing Drupal... ${NC}"
 time -p site_install
 
-echo -e "Open ${yellow}http://${VIRTUAL_HOST}${NC} in your browser to verify the setup."
-echo-yellow "Open ${yellow}http://${VIRTUAL_HOST}${NC}/user/login to log in with user:admin password:admin."
+echo-yellow "Open ${yellow}http://${VIRTUAL_HOST}/user/login${NC} to log in with user:admin password:admin."
 
 #-------------------------- END: Execution --------------------------------

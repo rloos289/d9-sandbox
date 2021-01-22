@@ -34,5 +34,6 @@ echo -e "${green_bg} Step 2 ${NC}${green} Initializing site...${NC}"
 fin init-site #calling .docksal/commands/init-site
 
 echo -e "${green_bg} DONE! ${NC}${green} Completed all initialization steps.${NC}"
+echo -e "${green} If you want to know more about these steps, start at .docksal/commands/init${NC}"
 
 #-------------------------- END: Execution --------------------------------
