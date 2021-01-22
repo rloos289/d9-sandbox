@@ -41,10 +41,12 @@ module:
   user: 0
   views_ui: 0
   views: 10
-  standard: 1000
+  minimal: 1000
 theme:
   bartik: 0
   seven: 0
-profile: standard
+  # Installing minimal profile with standard config, see site-install comment
+  # in init-site.
+profile: minimal
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

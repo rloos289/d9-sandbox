@@ -86,7 +86,10 @@ site_install ()
 	cd "$DOCROOT_PATH"
 
 	echo-green "Installing Drupal..."
-	drush site-install standard --existing-config --account-pass="admin" --site-name='d9-sandbox' -y
+	# While this is techincally using the minimal install profile, all of the config
+	# its using is from standard. This is because of a bug encountered with the
+	# shortcuts module (Which has been removed from the config)
+	drush site-install minimal --existing-config --account-pass="admin" --site-name='d9-sandbox' -y
 }
 
 #-------------------------- END: Functions --------------------------------
