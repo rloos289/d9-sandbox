@@ -1,0 +1,6 @@
+name: My Module
+type: module
+description: A blank example module
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
