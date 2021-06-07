@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+## Rebuild the codebase to start fresh work.
+##
+## Usage: fin rebuild
+
+# This runs within the CLI container, so all tools are available.
+
+set -e
+source ${PROJECT_ROOT}/.docksal/vars/colors
+
+echo -e "${green_bg} Step 1 ${NC}${green} Re-installing Composer...${NC}"
+fin composer install
+echo -e "${green_bg} Step 2 ${NC}${green} Clearing cache...${NC}"
+fin drush cr
+echo -e "${green_bg} Step 3 ${NC}${green} Syncing Config...${NC}"
+fin drush cim -y
+echo -e "${green_bg} Step 3 ${NC}${green} Re-building theme...${NC}"
+# @todo // add whatever the theme compile command ends up being
+echo -e "${green_bg} Done! ${NC}"

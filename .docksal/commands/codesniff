@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+## Run codesniffer and fixer.
+##
+## Usage: fin codesniff [--fix]
+
+# This runs within the CLI container, so all tools are available.
+source ${PROJECT_ROOT}/.docksal/vars/colors
+
+STANDARD="--standard='tests/phpcs.xml'"
+COMMAND="phpcs"
+DIRECTORIES="web/modules web/themes"
+
+if [[ "$1" == "--fix" ]]; then
+  COMMAND="phpcbf"
+fi
+
+# run the command in the container.
+fin exec "$COMMAND $STANDARD $DIRECTORIES"
+
+if [ $? -eq 0 ]; then
+  echo -e "${green} All code in $DIRECTORIES sniffed, no issues found ${NC}"
+fi
